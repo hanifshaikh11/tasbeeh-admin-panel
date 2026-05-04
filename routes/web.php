@@ -7,14 +7,20 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\WaitlistController;
+
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('home');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::view('/home', 'home')->name('home');
+Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+Route::get('/admin/waitlist', [WaitlistController::class, 'index'])->name('waitlist.index')->middleware(['auth', 'status', 'permission:waitlist.view']);
+Route::delete('/admin/waitlist/{id}', [WaitlistController::class, 'destroy'])->name('waitlist.destroy')->middleware(['auth', 'status', 'permission:waitlist.delete']);
+
+
 
 Route::middleware(['auth', 'status'])->group(function () {
 
