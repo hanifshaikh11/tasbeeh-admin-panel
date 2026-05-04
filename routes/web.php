@@ -16,7 +16,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'status'])->group(function () {
 
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permission:dashboard.view')->name('dashboard');
@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route::middleware(['auth', 'role:super_admin'])->group(function () {
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'status'])->group(function () {
 
     // Users
     Route::get('/users', [UserController::class, 'index'])->middleware('permission:users.view')->name('users.index');
@@ -49,11 +49,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/roles/{id}/permissions', [RolePermissionController::class, 'update'])->middleware('permission:roles.manage')->name('roles.permissions.update');
 
     // Settings
-    Route::get('/settings', [SettingController::class,'index'])->middleware('permission:settings.manage')->name('settings.index');
-    Route::post('/settings', [SettingController::class,'update'])->middleware('permission:settings.manage')->name('settings.update');
+    Route::get('/settings', [SettingController::class, 'index'])->middleware('permission:settings.manage')->name('settings.index');
+    Route::post('/settings', [SettingController::class, 'update'])->middleware('permission:settings.manage')->name('settings.update');
 
-    Route::get('/permission-matrix',[RolePermissionController::class, 'matrix'])->middleware('permission:roles.manage')->name('permissions.matrix');
-    Route::post('/permission-matrix',[RolePermissionController::class, 'matrixUpdate'])->middleware('permission:roles.manage');
+    Route::get('/permission-matrix', [RolePermissionController::class, 'matrix'])->middleware('permission:roles.manage')->name('permissions.matrix');
+    Route::post('/permission-matrix', [RolePermissionController::class, 'matrixUpdate'])->middleware('permission:roles.manage');
 });
 
 

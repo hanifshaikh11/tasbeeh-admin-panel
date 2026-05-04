@@ -31,6 +31,14 @@ class UserController extends Controller
     public function toggleStatus($id)
     {
         $user = User::findOrFail($id);
+
+        if ($user->hasRole('super_admin')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Super Admin account is protected.'
+            ], 403);
+        }
+
         $user->status = !$user->status;
         $user->save();
 

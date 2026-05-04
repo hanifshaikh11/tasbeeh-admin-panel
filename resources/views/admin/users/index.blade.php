@@ -74,22 +74,20 @@
 
                             @can('users.manage')
                                 <td class="p-3">
-
-                                    <form class="status-form" action="{{ route('users.toggle.status', $user->id) }}"
-                                        method="POST">
-
-                                        @csrf
-
-                                        <button type="submit"
-                                            class="status-btn text-white px-4 py-2 rounded-lg text-xs
-        {{ $user->status ? 'bg-red-600' : 'bg-green-600' }}">
-
-                                            {{ $user->status ? 'Block' : 'Unblock' }}
-
-                                        </button>
-
-                                    </form>
-
+                                    @if ($user->hasRole('super_admin'))
+                                        <span class="px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded-full">
+                                            Protected
+                                        </span>
+                                    @else
+                                        <form class="status-form" action="{{ route('users.toggle.status', $user->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="status-btn text-white px-4 py-2 rounded-lg text-xs {{ $user->status ? 'bg-red-600' : 'bg-green-600' }}">
+                                                {{ $user->status ? 'Block' : 'Unblock' }}
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             @endcan
 
