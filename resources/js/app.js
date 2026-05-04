@@ -11,13 +11,11 @@ import Swal from 'sweetalert2';
 
 window.Swal = Swal;
 
-if (!response.ok) {
-    let data = await response.json();
-
-    Swal.fire({
-        icon: 'error',
-        title: data.message
-    });
-
-    return;
-}
+// if (!response.ok) {
+//     let data = await response.json();
+//     Swal.fire({
+//         icon: 'error',
+//         title: data.message
+//     });
+//     return;
+// }
